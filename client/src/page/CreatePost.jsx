@@ -16,7 +16,6 @@ const CreatePost = () => {
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const handlePriceChange = (e) => setForm({ ...form, price: e.target.value });
 
   const handleSurpriseMe = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
@@ -24,6 +23,7 @@ const CreatePost = () => {
   };
   const generateImage = async () => {
     if (form.prompt) {
+ 
       try {
         setGeneratingImg(true);
         const response = await fetch('http://localhost:8080/api/v1/dalle', {
@@ -33,6 +33,7 @@ const CreatePost = () => {
           },
           body: JSON.stringify({
             prompt: form.prompt,
+             
           }),
         });
 
@@ -44,14 +45,14 @@ const CreatePost = () => {
         setGeneratingImg(false);
       }
     } else {
-      alert('Please provide proper prompt');
+      alert('Please provide proper prompt'+form.price);
     }
   };
    
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.prompt && form.photo) {
+    if (form.prompt && form.photo && form.price) {
       setLoading(true);
       try {
         const response = await fetch('http://localhost:8080/api/v1/post', {
@@ -135,18 +136,7 @@ const CreatePost = () => {
               {generatingImg ? 'Generating...' : 'Generate'}
             </button>
           </div>
-          
-          <div className="mt-5 flex gap-5">
-          <FormField
-              labelName="Enter Price"
-              type="text"
-              name="price"
-              placeholder="0"
-              value={form.price}
-              handleChange={handlePriceChange}
-            />
-           </div>
-
+  
           <div className="mt-10">
             <p className="mt-2 text-[#666e75] text-[14px]">** If you want you can even share the created image in the HashImagin Community **</p>
             <button
