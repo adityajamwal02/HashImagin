@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
+
 const CreatePost = () => {
     const navigate = useNavigate();
   
@@ -15,7 +16,8 @@ const CreatePost = () => {
     });
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, name: e.target.value });
+  const handlePriceChange = (e) => setForm({ ...form, price: e.target.value });
 
   const handleSurpriseMe = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
@@ -136,7 +138,16 @@ const CreatePost = () => {
               {generatingImg ? 'Generating...' : 'Generate'}
             </button>
           </div>
-  
+          <div className="mt-5 flex gap-5">
+          <FormField
+              labelName="Enter Price"
+              type="text"
+              name="price"
+              placeholder="0"
+              value={form.price}
+              handleChange={handlePriceChange}
+            />
+           </div>
           <div className="mt-10">
             <p className="mt-2 text-[#666e75] text-[14px]">** If you want you can even share the created image in the HashImagin Community **</p>
             <button
@@ -149,5 +160,6 @@ const CreatePost = () => {
         </form>
       </section>
     );
-              };
+};
+
 export default CreatePost
