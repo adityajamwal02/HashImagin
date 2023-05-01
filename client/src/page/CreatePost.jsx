@@ -16,7 +16,8 @@ const CreatePost = () => {
     });
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
-  const handleChange = (e) => setForm({ ...form, name: e.target.value });
+  // const handleChange = (e) => setForm({ ...form, name: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handlePriceChange = (e) => setForm({ ...form, price: e.target.value });
 
   const handleSurpriseMe = () => {
